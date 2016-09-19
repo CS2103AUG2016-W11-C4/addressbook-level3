@@ -390,6 +390,71 @@ public class LogicTest {
                                 false,
                                 threePersons);
     }
+    
+    @Test
+    public void execute_renameTag_renamesCorrectTag() throws Exception {
+        String currentTagName = "tag1";
+        String newTagName = "tagNew123";
+        
+        TestDataHelper helper = new TestDataHelper();
+        List<Person> persons = helper.generatePersonList(helper.adam());
+
+        AddressBook expectedAB = helper.generateAddressBook(persons);
+        helper.addToAddressBook(addressBook, persons);
+        logic.setLastShownList(persons);
+        
+        expectedAB.addTag(new Tag(newTagName));
+        expectedAB.replaceAllPersonsTag(new Tag(currentTagName), new Tag(newTagName));
+        expectedAB.removeTag(new Tag(currentTagName));
+
+        String expectedMessage = String.format(RenameTagCommand.MESSAGE_SUCCESS, currentTagName, newTagName);
+        assertCommandBehavior("renametag " + currentTagName + " " + newTagName, 
+                expectedMessage,
+                expectedAB,
+                false,
+                persons);
+    }
+    
+    @Test
+    public void execute_renameTag_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenameTagCommand.MESSAGE_USAGE);
+        assertCommandBehavior("renametag ", expectedMessage);
+        assertCommandBehavior("renametag one", expectedMessage);
+    }
+    
+    @Test
+    public void execute_renameTag_invalidTagName() throws Exception {
+        String expectedMessage = String.format(RenameTagCommand.MESSAGE_FAILED_INVALID_TAG_NAME, Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertCommandBehavior("renametag friends %#&&%", expectedMessage);
+        assertCommandBehavior("renametag one two three", expectedMessage);
+    }
+    
+    @Test
+    public void execute_renameTag_tagDoesNotExist() throws Exception {
+        String currentTagName = "friends";
+        String expectedMessage = String.format(RenameTagCommand.MESSAGE_FAILED_TAG_DOES_NOT_EXIST, currentTagName);
+        assertCommandBehavior("renametag " + currentTagName + " newName", expectedMessage);
+    }
+    
+    @Test
+    public void execute_renameTag_tagAlreadyExists() throws Exception {
+        String currentTagName = "tag1";
+        String newTagName = "tag2";
+        
+        TestDataHelper helper = new TestDataHelper();
+        List<Person> persons = helper.generatePersonList(helper.adam());
+
+        AddressBook expectedAB = helper.generateAddressBook(persons);
+        helper.addToAddressBook(addressBook, persons);
+        logic.setLastShownList(persons);
+
+        String expectedMessage = String.format(RenameTagCommand.MESSAGE_FAILED_TAG_ALREADY_EXISTS, newTagName);
+        assertCommandBehavior("renametag " + currentTagName + " " + newTagName, 
+                expectedMessage,
+                expectedAB,
+                false,
+                persons);
+    }
 
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {
