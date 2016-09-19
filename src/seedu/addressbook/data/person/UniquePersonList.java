@@ -117,7 +117,7 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Returns list of all persons with tag
      */
-    public List<ReadOnlyPerson> personsWithTag(Tag tag){
+    public List<ReadOnlyPerson> getPersonsWithTag(Tag tag){
         List<ReadOnlyPerson> list = new ArrayList<ReadOnlyPerson>();
         for(Person i: internalList){
             if(i.getTags().contains(tag)){

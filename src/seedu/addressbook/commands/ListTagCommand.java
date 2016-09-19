@@ -22,7 +22,7 @@ public class ListTagCommand extends Command{
     @Override
     public CommandResult execute(){
         List<ReadOnlyPerson> allPersons = null;
-        allPersons = addressBook.getAllPersons().personsWithTag(tag);
+        allPersons = addressBook.getAllPersons().getPersonsWithTag(tag);
         return new CommandResult(getMessageForPersonListShownSummary(allPersons), allPersons);
 
     }
