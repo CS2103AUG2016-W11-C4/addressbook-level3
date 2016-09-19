@@ -103,15 +103,15 @@ Format: `clear`
 Exits the program.<br>
 Format: `exit`  
 
-## Listing persons with tag
-Lists all person with the specified tag
-Format: 'tags TAG'
+## Listing persons with tag : `tags`
+Lists all person with the specified tag.<br>
+Format: `tags TAG`
 
->TAG is a single word without spaces
+> TAG is a single word without spaces
 
 Examples:
-*`tags friend`
- Lists all persons with the tag `friend`
+* `tags friend`<br>
+  Lists all persons with the tag `friend`
 
 ## Saving the data 
 Address book data are saved in the hard disk automatically after any command that changes the data.<br>
