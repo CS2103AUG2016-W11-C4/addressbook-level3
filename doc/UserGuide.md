@@ -65,6 +65,16 @@ Examples:
   `delete 1`<br>
   Deletes the 1st person in the results of the `find` command.
 
+## Renaming a tag : `renametag`
+Renames a tag in the address book. Irreversible.<br>
+Format: `renametag CURRENT_TAG_NAME NEW_TAG_NAME`
+
+> Renames the tag in the address book. 
+
+Examples: 
+* `renametag Friends Enemies`<br>
+  Renames the tag from Friends to Enemies in the address book.
+
 ## View non-private details of a person : `view`
 Displays the non-private details of the specified person.<br>
 Format: `view INDEX`

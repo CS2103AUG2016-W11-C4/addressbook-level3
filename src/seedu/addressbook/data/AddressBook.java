@@ -144,6 +144,29 @@ public class AddressBook {
     public UniqueTagList getAllTags() {
         return new UniqueTagList(allTags);
     }
+    
+    /**
+     * Replace the tag in all Persons to a new tag.
+     * The tag must already exist in the address book.
+     */
+    public void replaceAllPersonsTag(Tag currentTag, Tag newTag) {
+        for (Person person : allPersons) {
+            UniqueTagList tagList = person.getTags();
+            if (tagList.contains(currentTag)) {
+                try {
+                    tagList.remove(currentTag);
+                    tagList.add(newTag);
+                } catch (DuplicateTagException dte) {
+                    // tag is already added, continue
+                } catch (TagNotFoundException tnfe) {
+                    // not possible, IMMEDIATE FAILURE
+                    tnfe.printStackTrace();
+                }
+                person.setTags(tagList);
+                syncTagsWithMasterList(person);
+            }
+        }
+    }
 
     @Override
     public boolean equals(Object other) {
