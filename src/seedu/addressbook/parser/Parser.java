@@ -2,6 +2,7 @@ package seedu.addressbook.parser;
 
 import seedu.addressbook.commands.*;
 import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.tag.Tag;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -15,6 +16,8 @@ import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 public class Parser {
 
     public static final Pattern PERSON_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+)");
+    
+    public static final Pattern RENAME_ARGS_FORMAT = Pattern.compile("(?<oldName>.+) (?<newName>.+)");
 
     public static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
@@ -68,6 +71,9 @@ public class Parser {
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
 
+            case RenameTagCommand.COMMAND_WORD:
+                return prepareRenameTag(arguments);
+
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
 
@@ -88,6 +94,9 @@ public class Parser {
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
+
+            case ListTagCommand.COMMAND_WORD:
+                return prepareListTag(arguments);
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
@@ -191,6 +200,21 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
     }
+    
+    /**
+     * Parses arguments in the context of the rename tag command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareRenameTag(String args) {
+        final Matcher matcher = RENAME_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    RenameTagCommand.MESSAGE_USAGE));
+        }
+        return new RenameTagCommand(matcher.group("oldName"), matcher.group("newName"));
+    }
 
     /**
      * Parses arguments in the context of the view command.
@@ -260,6 +284,23 @@ public class Parser {
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
+    }
+
+    private Command prepareListTag(String args) {
+        final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ListTagCommand.MESSAGE_USAGE));
+        }
+
+        Tag tag;
+        try {
+            tag = new Tag(args);
+        } catch (IllegalValueException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ListTagCommand.MESSAGE_USAGE));
+        }
+        return new ListTagCommand(tag);
     }
 
 

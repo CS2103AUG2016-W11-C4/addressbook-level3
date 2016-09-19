@@ -65,6 +65,16 @@ Examples:
   `delete 1`<br>
   Deletes the 1st person in the results of the `find` command.
 
+## Renaming a tag : `renametag`
+Renames a tag in the address book. Irreversible.<br>
+Format: `renametag CURRENT_TAG_NAME NEW_TAG_NAME`
+
+> Renames the tag in the address book. 
+
+Examples: 
+* `renametag Friends Enemies`<br>
+  Renames the tag from Friends to Enemies in the address book.
+
 ## View non-private details of a person : `view`
 Displays the non-private details of the specified person.<br>
 Format: `view INDEX`
@@ -117,6 +127,16 @@ Format: `clear`
 ## Exiting the program : `exit`
 Exits the program.<br>
 Format: `exit`  
+
+## Listing persons with tag : `tags`
+Lists all person with the specified tag.<br>
+Format: `tags TAG`
+
+> TAG is a single word without spaces
+
+Examples:
+* `tags friend`<br>
+  Lists all persons with the tag `friend`
 
 ## Saving the data 
 Address book data are saved in the hard disk automatically after any command that changes the data.<br>
