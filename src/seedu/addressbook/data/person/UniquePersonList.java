@@ -2,6 +2,7 @@ package seedu.addressbook.data.person;
 
 import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.DuplicateDataException;
+import seedu.addressbook.data.tag.Tag;
 
 import java.util.*;
 
@@ -111,6 +112,20 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void clear() {
         internalList.clear();
+    }
+
+    /**
+     * Returns list of all persons with tag
+     */
+    public List<ReadOnlyPerson> personsWithTag(Tag tag){
+        List<ReadOnlyPerson> list = new ArrayList<ReadOnlyPerson>();
+        for(Person i: internalList){
+            if(i.getTags().contains(tag)){
+                list.add(i);
+            }
+        }
+
+        return list;
     }
 
     @Override
