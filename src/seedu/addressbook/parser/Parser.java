@@ -29,6 +29,9 @@ public class Parser {
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
+    public static final Pattern EDIT_PHONE_ARGS_FORMAT = 
+            Pattern.compile("(?<targetIndex>.+)" 
+                    + " (?<phone>[^/]+)");
 
     /**
      * Signals that the user input could not be parsed.
@@ -85,6 +88,9 @@ public class Parser {
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
+                
+            case EditPhoneCommand.COMMAND_WORD:
+                return prepareEditPhone(arguments);
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
@@ -125,6 +131,34 @@ public class Parser {
 
                     getTagsFromArgs(matcher.group("tagArguments"))
             );
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
+        }
+    }
+
+    /**
+     * Parse arguments in the context of the edit phone command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareEditPhone(String args) {
+        final Matcher matcher = EDIT_PHONE_ARGS_FORMAT.matcher(args.trim());
+        
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPhoneCommand.MESSAGE_USAGE));
+        }
+        
+        try {
+            final int targetIndex = Integer.parseInt(matcher.group("targetIndex"));
+            return new EditPhoneCommand(targetIndex, matcher.group("phone"));
+            
+        } catch (NumberFormatException nfe) {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPhoneCommand.MESSAGE_USAGE));
+            
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }

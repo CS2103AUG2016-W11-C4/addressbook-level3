@@ -74,6 +74,32 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Edit phone number
+
+**MSS**
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to edit phone number of a specific person in the list
+4. AddressBook edits phone number for that person <br>
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given index is invalid
+
+> 3a1. AddressBook shows an error message for invalid index <br>
+  Use case resumes at step 2
+  
+3b. The given phone number is invalid
+
+> 3b1. AddressBook shows an error message for invalid phone number <br>
+  Use case resumes at step 2
+
 #### Use case: Rename tag
 
 **MSS**

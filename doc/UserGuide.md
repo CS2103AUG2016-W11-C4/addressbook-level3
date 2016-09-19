@@ -104,6 +104,21 @@ Examples:
 * `find Betsy`<br> 
   `viewall 1`<br>
   Views all details of the 1st person in the results of the `find` command.
+  
+## Edits phone number for a person : `editphone`
+Edits the phone number for the specified person.<br>
+Format: `editphone INDEX PHONE`
+
+> Edits the person's phone number at the specified `INDEX`.
+  The index refers to the index number shown in the most recent listing.
+  
+Examples: 
+* `list`<br>
+  `editphone 2 98765432`<br>
+  Edits the phone number of the 2nd person in the address book.
+* `find Betsy`<br> 
+  `editphone 1 98765432`<br>
+  Edits the phone number of the 1st person in the results of the `find` command.
 
 ## Clearing all entries : `clear`
 Clears all entries from the address book.<br>

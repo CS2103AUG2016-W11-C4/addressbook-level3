@@ -219,15 +219,29 @@ public class LogicTest {
      * @param commandWord to test assuming it targets a single person in the last shown list based on visible index.
      */
     private void assertInvalidIndexBehaviorForCommand(String commandWord) throws Exception {
+        assertInvalidIndexBehaviorForCommand(commandWord, "");
+    }
+
+    /**
+     * Confirms the 'invalid argument index number behaviour' for the given command
+     * targeting a single person in the last shown list, using visible index.
+     * @param commandWord to test assuming it targets a single person in the last shown list based on visible index.
+     * @param addtionalArgs that the command needs
+     */
+    private void assertInvalidIndexBehaviorForCommand(String commandWord, String additionalArgs)
+            throws Exception {
         String expectedMessage = Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
         TestDataHelper helper = new TestDataHelper();
         List<Person> lastShownList = helper.generatePersonList(false, true);
 
         logic.setLastShownList(lastShownList);
 
-        assertCommandBehavior(commandWord + " -1", expectedMessage, AddressBook.empty(), false, lastShownList);
-        assertCommandBehavior(commandWord + " 0", expectedMessage, AddressBook.empty(), false, lastShownList);
-        assertCommandBehavior(commandWord + " 3", expectedMessage, AddressBook.empty(), false, lastShownList);
+        assertCommandBehavior(commandWord + " -1 " + additionalArgs, expectedMessage, AddressBook.empty(),
+                false, lastShownList);
+        assertCommandBehavior(commandWord + " 0 " + additionalArgs, expectedMessage, AddressBook.empty(),
+                false, lastShownList);
+        assertCommandBehavior(commandWord + " 3 " + additionalArgs, expectedMessage, AddressBook.empty(),
+                false, lastShownList);
 
     }
 
@@ -274,6 +288,46 @@ public class LogicTest {
                               expectedAB,
                               false,
                               lastShownList);
+    }
+
+    @Test
+    public void execute_editPhone_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                EditPhoneCommand.MESSAGE_USAGE);
+        
+        assertCommandBehavior("editphone", expectedMessage);
+        assertCommandBehavior("editphone notnumber", expectedMessage);
+        assertCommandBehavior("editphone notnumber 98765432", expectedMessage);
+    }
+    
+    @Test
+    public void execute_editPhone_invalidPhoneNumber() throws Exception {        
+        assertCommandBehavior("editphone 1 notnumber", Phone.MESSAGE_PHONE_CONSTRAINTS);
+    }
+    
+    @Test
+    public void execute_editPhone_invalidIndex() throws Exception {
+        assertInvalidIndexBehaviorForCommand("editphone", "98765432");
+    }
+    
+    @Test
+    public void execute_editPhone_successful() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Person p1 = helper.generatePerson(1, false);
+        List<Person> lastShownList = helper.generatePersonList(p1);
+        
+        Person changedP1 = helper.changePhoneNumber(p1, 123);
+        AddressBook expectedAB = new AddressBook();
+        expectedAB.addPerson(changedP1);
+
+        addressBook.addPerson(p1);
+        logic.setLastShownList(lastShownList);
+
+        assertCommandBehavior("editphone 1 123",
+                                String.format(EditPhoneCommand.MESSAGE_SUCCESS, p1.getName()),
+                                expectedAB,
+                                false,
+                                lastShownList);
     }
 
     @Test
@@ -536,6 +590,12 @@ public class LogicTest {
             Tag tag2 = new Tag("tag2");
             UniqueTagList tags = new UniqueTagList(tag1, tag2);
             return new Person(name, privatePhone, email, privateAddress, tags);
+        }
+
+        public Person changePhoneNumber(Person person, int newPhoneNumber) throws Exception {
+            return new Person(person.getName(),
+                    new Phone(String.valueOf(newPhoneNumber), person.getPhone().isPrivate()),
+                    person.getEmail(), person.getAddress(), person.getTags());
         }
 
         /**
