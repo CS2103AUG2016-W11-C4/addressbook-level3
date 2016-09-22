@@ -1,10 +1,12 @@
 package seedu.addressbook.data;
 
+import seedu.addressbook.Main;
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.person.UniquePersonList.*;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 import seedu.addressbook.data.tag.UniqueTagList.*;
+import seedu.addressbook.ui.Gui;
 
 import java.util.*;
 
@@ -19,6 +21,8 @@ public class AddressBook {
 
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
+    
+    private final static String[] allThemes = {"Dark", "Light", "Mocha", "Grape"};
 
     public static AddressBook empty() {
         return new AddressBook();
@@ -97,6 +101,26 @@ public class AddressBook {
     public boolean containsPerson(ReadOnlyPerson key) {
         return allPersons.contains(key);
     }
+    
+    /**
+     * Checks if provided theme name exists
+     * */
+    
+    public boolean containsTheme(String theme) {
+    	for (String th : allThemes) {
+    		if (th.equals(theme)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    /**
+     * Returns all themes as a string, for use of help command.
+     * */
+    public static String allThemesString() {
+    	return String.join(", ", allThemes);
+    }
 
     /**
      * Checks if an equivalent person exists in the address book.
@@ -166,6 +190,14 @@ public class AddressBook {
                 syncTagsWithMasterList(person);
             }
         }
+    }
+    
+    /**
+     * Change the theme to a new theme.
+     * The new theme must exist.
+     * */
+    public void changeTheme(String newTheme) {
+    	
     }
 
     @Override

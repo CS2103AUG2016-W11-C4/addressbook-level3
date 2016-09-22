@@ -124,6 +124,20 @@ Use case ends.
 
 > 1c1. AddressBook shows an error message <br> 
   Use case ends
+  
+  #### Use case: Change Theme
+  **MSS**
+
+1. User requests to change to a new theme
+2. AddressBook changes the theme
+Use case ends.
+
+**Extensions**
+
+1a. The theme to be renamed does not exist
+
+> 1a1. AddressBook shows an error message <br>
+  Use case ends
 
 ## Appendix C : Non Functional Requirements
 
