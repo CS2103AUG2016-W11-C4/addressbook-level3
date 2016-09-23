@@ -19,7 +19,8 @@ public class AddressBook {
 
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
-
+    private final static String[] allThemes = {"Dark", "Light", "Mocha", "Grape"};
+    
     public static AddressBook empty() {
         return new AddressBook();
     }
@@ -98,6 +99,28 @@ public class AddressBook {
         return allPersons.contains(key);
     }
 
+    
+    
+    /**
+     * Checks if provided theme name exists
+     * */
+    
+    public boolean containsTheme(String theme) {
+    	for (String th : allThemes) {
+    		if (th.equals(theme)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    /**
+     * Returns all themes as a string, for use of help command.
+     * */
+    public static String allThemesString() {
+    	return String.join(", ", allThemes);
+    }
+    
     /**
      * Checks if an equivalent person exists in the address book.
      */

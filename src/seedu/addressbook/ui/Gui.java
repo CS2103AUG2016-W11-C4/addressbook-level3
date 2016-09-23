@@ -23,6 +23,7 @@ public class Gui {
 
     private MainWindow mainWindow;
     private String version;
+    private static Stage stage;
 
     public Gui(Logic logic, String version) {
         this.logic = logic;
@@ -30,20 +31,27 @@ public class Gui {
     }
 
     public void start(Stage stage, Stoppable mainApp) throws IOException {
-        mainWindow = createMainWindow(stage, mainApp);
-        mainWindow.displayWelcomeMessage(version, logic.getStorageFilePath());
+   	Gui.stage = stage;
+       mainWindow = createMainWindow(mainApp);
+       mainWindow.displayWelcomeMessage(version, logic.getStorageFilePath());
     }
 
-    private MainWindow createMainWindow(Stage stage, Stoppable mainApp) throws IOException{
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("ui" + File.separator + "mainwindow.fxml"));
-        stage.setTitle(version);
-        stage.setScene(new Scene(loader.load(), INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT));
-        stage.show();
-        MainWindow mainWindow = loader.getController();
-        mainWindow.setLogic(logic);
-        mainWindow.setMainApp(mainApp);
-        return mainWindow;
+   private MainWindow createMainWindow(Stoppable mainApp) throws IOException{
+       FXMLLoader loader = new FXMLLoader();
+       loader.setLocation(Main.class.getResource("ui" + File.separator + "mainwindow.fxml"));
+       stage.setTitle(version);
+       stage.setScene(new Scene(loader.load(), INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT));
+       changeTheme("Dark");
+       stage.show();
+       MainWindow mainWindow = loader.getController();
+       mainWindow.setLogic(logic);
+       mainWindow.setMainApp(mainApp);
+       return mainWindow;
     }
+   
+   public static void changeTheme(String newThemeName) {
+   	stage.getScene().getStylesheets().clear();
+   	stage.getScene().getStylesheets().add(Main.class.getResource("ui/" + newThemeName + "Theme.css").toExternalForm());
+   }
 
 }
