@@ -76,9 +76,6 @@ public class Parser {
             case RenameTagCommand.COMMAND_WORD:
                 return prepareRenameTag(arguments);
                 
-            case ChangeThemeCommand.COMMAND_WORD:
-            	return changeTheme(arguments);
-
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
 
