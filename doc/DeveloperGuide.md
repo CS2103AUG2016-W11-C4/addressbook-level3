@@ -124,9 +124,10 @@ Use case ends.
 
 > 1c1. AddressBook shows an error message <br> 
   Use case ends
+  
+#### Use case: Change theme
 
-#### Use case: Change Theme
-  **MSS**
+**MSS**
 
 1. User requests to change to a new theme
 2. AddressBook changes the theme

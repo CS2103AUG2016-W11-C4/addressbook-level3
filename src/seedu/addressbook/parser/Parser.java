@@ -96,6 +96,9 @@ public class Parser {
                 
             case EditPhoneCommand.COMMAND_WORD:
                 return prepareEditPhone(arguments);
+                
+            case ChangeThemeCommand.COMMAND_WORD:
+                return prepareChangeTheme(arguments);
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
@@ -228,6 +231,21 @@ public class Parser {
                     RenameTagCommand.MESSAGE_USAGE));
         }
         return new RenameTagCommand(matcher.group("oldName"), matcher.group("newName"));
+    }
+    
+    /**
+     * Parses arguments in the context of the change theme command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareChangeTheme(String args) {
+        final Matcher matcher = CHANGE_THEME_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeThemeCommand.MESSAGE_USAGE));
+        }
+        return new ChangeThemeCommand(matcher.group("newTheme"));
     }
 
     /**

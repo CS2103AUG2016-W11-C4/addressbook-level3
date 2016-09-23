@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class Gui {
 
-    /** Offset required to convert between 1-indexing and 0-indexing.  */
+    /** Offset required to convert between 1-indexing and 0-indexing. */
     public static final int DISPLAYED_INDEX_OFFSET = 1;
 
     public static final int INITIAL_WINDOW_WIDTH = 800;
@@ -31,27 +31,27 @@ public class Gui {
     }
 
     public void start(Stage stage, Stoppable mainApp) throws IOException {
-   	Gui.stage = stage;
-       mainWindow = createMainWindow(mainApp);
-       mainWindow.displayWelcomeMessage(version, logic.getStorageFilePath());
+        Gui.stage = stage;
+        mainWindow = createMainWindow(mainApp);
+        mainWindow.displayWelcomeMessage(version, logic.getStorageFilePath());
     }
 
-   private MainWindow createMainWindow(Stoppable mainApp) throws IOException{
-       FXMLLoader loader = new FXMLLoader();
-       loader.setLocation(Main.class.getResource("ui" + File.separator + "mainwindow.fxml"));
-       stage.setTitle(version);
-       stage.setScene(new Scene(loader.load(), INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT));
-       changeTheme("Dark");
-       stage.show();
-       MainWindow mainWindow = loader.getController();
-       mainWindow.setLogic(logic);
-       mainWindow.setMainApp(mainApp);
-       return mainWindow;
+    private MainWindow createMainWindow(Stoppable mainApp) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("ui" + File.separator + "mainwindow.fxml"));
+        stage.setTitle(version);
+        stage.setScene(new Scene(loader.load(), INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT));
+        changeTheme("Dark");
+        stage.show();
+        MainWindow mainWindow = loader.getController();
+        mainWindow.setLogic(logic);
+        mainWindow.setMainApp(mainApp);
+        return mainWindow;
     }
-   
-   public static void changeTheme(String newThemeName) {
-   	stage.getScene().getStylesheets().clear();
-   	stage.getScene().getStylesheets().add(Main.class.getResource("ui/" + newThemeName + "Theme.css").toExternalForm());
-   }
 
+    public static void changeTheme(String newThemeName) {
+        stage.getScene().getStylesheets().clear();
+        stage.getScene().getStylesheets()
+                .add(Main.class.getResource("ui/" + newThemeName + "Theme.css").toExternalForm());
+    }
 }
