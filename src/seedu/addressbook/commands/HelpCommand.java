@@ -23,7 +23,7 @@ public class HelpCommand extends Command {
             + "\n" + HelpCommand.MESSAGE_USAGE
             + "\n" + ExitCommand.MESSAGE_USAGE
             + "\n" + ListTagCommand.MESSAGE_USAGE
-    		+ "\n" + ChangeThemeCommand.MESSAGE_USAGE;
+            + "\n" + ChangeThemeCommand.MESSAGE_USAGE;
 
     public HelpCommand() {}
 

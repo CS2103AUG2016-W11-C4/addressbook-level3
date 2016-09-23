@@ -138,6 +138,16 @@ Examples:
 * `tags friend`<br>
   Lists all persons with the tag `friend`
 
+## Changing a theme : `theme`
+Changes the theme of the app. Irreversible.<br>
+Format: `theme NEW_THEME`
+
+> Changes the theme of the app.
+
+Examples: 
+* `theme Light`<br>
+  Changes the theme of the app to Light theme.
+
 ## Saving the data 
 Address book data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.
@@ -150,13 +160,3 @@ You can change the location by specifying the file path as a program argument.<b
 >
 > When running the program inside Eclipse, you can 
   [set command line parameters before running the program](http://stackoverflow.com/questions/7574543/how-to-pass-console-arguments-to-application-in-eclipse).
-
-## Changing a theme : `theme`
-Changes the theme of the app. Irreversible.<br>
-Format: `theme NEW_THEME`
-
-> Changes the theme of the app.
-
-Examples: 
-* `theme Light`<br>
-  Changes the theme of the app to Light theme.

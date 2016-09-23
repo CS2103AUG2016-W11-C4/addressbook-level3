@@ -95,7 +95,7 @@ public class Parser {
                 return prepareEditPhone(arguments);
                 
             case ChangeThemeCommand.COMMAND_WORD:
-            	return changeTheme(arguments);
+                return prepareChangeTheme(arguments);
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
@@ -227,13 +227,13 @@ public class Parser {
      * @param args full command args string
      * @return the prepared command
      */
-    private Command changeTheme(String args) {
-    	final Matcher matcher = CHANGE_THEME_ARGS_FORMAT.matcher(args.trim());
-    	if (!matcher.matches()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ChangeThemeCommand.MESSAGE_USAGE));
+    private Command prepareChangeTheme(String args) {
+        final Matcher matcher = CHANGE_THEME_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeThemeCommand.MESSAGE_USAGE));
         }
-    	return new ChangeThemeCommand(matcher.group("newTheme"));
+        return new ChangeThemeCommand(matcher.group("newTheme"));
     }
 
     /**

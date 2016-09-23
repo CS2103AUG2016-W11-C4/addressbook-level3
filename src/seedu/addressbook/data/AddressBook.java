@@ -107,19 +107,19 @@ public class AddressBook {
      * */
     
     public boolean containsTheme(String theme) {
-    	for (String th : allThemes) {
-    		if (th.equals(theme)) {
-    			return true;
-    		}
-    	}
-    	return false;
+        for (String th : allThemes) {
+            if (th.equals(theme)) {
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
      * Returns all themes as a string, for use of help command.
      * */
     public static String allThemesString() {
-    	return String.join(", ", allThemes);
+        return String.join(", ", allThemes);
     }
 
     /**

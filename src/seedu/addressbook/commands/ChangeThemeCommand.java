@@ -25,7 +25,7 @@ public class ChangeThemeCommand extends Command {
     @Override
     public CommandResult execute() {
         if (!addressBook.containsTheme(newThemeName)) {
-        	return new CommandResult(String.format(MESSAGE_FAILED_THEME_DOES_NOT_EXIST, newThemeName));
+            return new CommandResult(String.format(MESSAGE_FAILED_THEME_DOES_NOT_EXIST, newThemeName));
         }
         Gui.changeTheme(newThemeName);
         return new CommandResult(MESSAGE_SUCCESS);
